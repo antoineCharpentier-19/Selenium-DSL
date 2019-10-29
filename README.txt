@@ -1,0 +1,1 @@
+Nous avons traduit les 8 exemples en notre syntaxe .slnm dans le fichier test.slnm

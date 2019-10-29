@@ -8,7 +8,7 @@ Global:
 
 Program:name=ID "returns" ret=("true"|"false") 
 	"{"
-	"open;"
+	"open" ";"
 	ins+=Instruction*
 	"}";
 	
@@ -21,11 +21,11 @@ Go:
 ;
 
 Verify:
-	"verify:" ("page" | elem=Element)  "contains" (text=STRING | "[" var=[Variable] "]" | Element=Element)
+	"verify" ":" ("page" | elem=Element)  "contains" (text=STRING | var=[Variable]  | Element=Element)
 ;
 
 FillText:
-	"fill:" (text=STRING| "[" var=[Variable] "]") "in" prop=ByProperty target=STRING
+	"fill" ":" "where" prop=ByProperty target=STRING "with" (text=STRING|  var=[Variable] )
 ;
 
 Variable:
@@ -33,19 +33,19 @@ Variable:
 ;
 
 Click:
-	"click:" Element
+	"click" ":" Element
 ;
 
 Check:
-	"check:" ("all"|by=By target=STRING) ("on" | "off") 
+	"check" ":"  "where" ("all"|by=By target=STRING) ("on" | "off") 
 ;
 
 SelectCombo:
-	"select-combo:" by=By target=STRING
+	"select-combo" ":"  "where" by=By target=STRING
 ;
 
 Element:
-	(type=Type) ("n°" number=INT)? "where" selector=By (target=STRING | "[" var=[Variable] "]")
+	(type=Type) ("n°" number=INT)? "where" selector=By (target=STRING | var=[Variable] )
 ;
 
 By:
