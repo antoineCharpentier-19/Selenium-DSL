@@ -2,8 +2,61 @@ grammar org.xtext.example.mydsl.Selenium with org.eclipse.xtext.common.Terminals
 
 generate selenium "http://www.xtext.org/example/mydsl/Selenium"
 
-Model:
-	greetings+=Greeting*;
+Global:
+	programs+=Program*
+;
+
+Program:name=ID "returns" ret=("true"|"false") 
+	"{"
+	"open;"
+	ins+=Instruction*
+	"}";
 	
-Greeting:
-	'Hello' name=ID '!';
+Instruction:
+	(Go | Verify | Click | FillText | Check | SelectCombo | Variable) ";"
+;
+
+Go:
+	"goto:" url=STRING
+;
+
+Verify:
+	"verify:" ("page" | elem=Element)  "contains" (text=STRING | "[" var=[Variable] "]" | Element=Element)
+;
+
+FillText:
+	"fill:" (text=STRING| "[" var=[Variable] "]") "in" prop=ByProperty target=STRING
+;
+
+Variable:
+	"var" name=ID "=" ("text" | "property" attr=STRING) "of" elem=Element 
+;
+
+Click:
+	"click:" Element
+;
+
+Check:
+	"check:" ("all"|by=By target=STRING) ("on" | "off") 
+;
+
+SelectCombo:
+	"select-combo:" by=By target=STRING
+;
+
+Element:
+	(type=Type) ("n°" number=INT)? "where" selector=By (target=STRING | "[" var=[Variable] "]")
+;
+
+By:
+	"text=" | ByProperty
+;
+
+ByProperty:
+	"property" property+=STRING "="
+;
+
+Type:
+	 "image" | "link" | "button" | "anything"
+;
+
